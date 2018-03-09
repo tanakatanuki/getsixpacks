@@ -6,20 +6,33 @@ class RecipesController < ApplicationController
   # 全ユーザーの投稿一覧
   def all_users_recipes
     @view_limit = 30
+    @sort_desc = 1
+
     @recipe_summary = RecipeSummary.new
     # @recipe_summaries = RecipeSummary.all
-    @recipe_summaries = RecipeSummary.all.order(created_at: :desc).limit(@view_limit)
     @ingredients = Ingredient.all
     @ingredients_name = Ingredient.pluck :name
     @ingredient_categories = IngredientCategory.all
     if user_signed_in? then
       @favorites = Favorite.where(user_id: current_user.id)
     end
-    
+
+    # 
+    if @sort_desc == 1
+      @recipe_summaries = RecipeSummary.all.order(created_at: :desc).limit(@view_limit)
+    else
+      @recipe_summaries = RecipeSummary.all.order(created_at: :asc).limit(@view_limit)
+    end
+
+
     # 検索機能
     if request.post?
       recipe_ids = Recipe.where(ingredient_id: params[:search][:ingredient]).pluck :recipe_summary_id
-      @recipe_summaries = RecipeSummary.where(id: recipe_ids).order(created_at: :desc).limit(@view_limit)
+      if @sort_desc == 1
+        @recipe_summaries = RecipeSummary.where(id: recipe_ids).order(created_at: :desc).limit(@view_limit)
+      else
+        @recipe_summaries = RecipeSummary.where(id: recipe_ids).order(created_at: :asc).limit(@view_limit)
+      end
     end
   end
   
@@ -40,6 +53,8 @@ class RecipesController < ApplicationController
 
   # ユーザーの投稿一覧
   def index
+    @sort_desc = 0
+    
     # @ingredients = Ingredient.all
     @ingredients_name = Ingredient.pluck :name
     # @recipes = Recipe.all
@@ -368,7 +383,6 @@ class RecipesController < ApplicationController
         return
       end
     end
-      
     
     @ingredients_name = Ingredient.pluck :name
 
@@ -381,7 +395,17 @@ class RecipesController < ApplicationController
     # 文字列配列で取得できる
     # @b = recipe_summary_params
     # puts @b
-    @c = recipe_summary_params.map(&:to_i)
+    
+    # レシピの表示順を変えた場合(descにした場合)、paramの順が逆になるため、元に戻す
+      puts "sort_desc...#{params[:sort_desc].to_i},view_limit...#{@view_limit}"
+    if params[:sort_desc].to_i == 1
+      puts "sort_desc"
+      recipe_summary_params_reverse = params[:recipe_summary][:recipe_ids].reverse 
+      @c = recipe_summary_params_reverse.map(&:to_i)
+      puts "c0..#{@c[0]},c1..#{@c[1]}"
+    else
+      @c = recipe_summary_params.map(&:to_i)
+    end
     
     # whereでidをキーにして抽出後、
     # pluck(:カラム名)で特定列の配列を取得できる
@@ -560,8 +584,10 @@ class RecipesController < ApplicationController
       if (0 <= w-arr_weight[i]) && (dp[i][w-arr_weight[i]]+arr_value[i] == dp[i+1][w]) then
         w -= arr_weight[i]
         item[i] = 1
+        puts "ありitemi..#{i}"
       # 等しい場合持っていかない
       elsif dp[i][w] == dp[i+1][w]
+        puts "なしitemi..#{i}"
         item[i] = 0
       # 実装エラー
       else
