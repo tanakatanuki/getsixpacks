@@ -1,0 +1,39 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-1 col-xs-7">
+      <%= form_tag(user_recipes_path(current_user), method: :post) do %>    
+        <!--
+        エラー表示
+        -->
+        <% if @recipe.errors.any? %>
+          <p><%= @recipe.errors.count %>件のエラーあり</p>
+          
+          <ul>
+            <% @recipe.errors.full_message.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        <% end %>
+
+        <h1>ユーザー情報</h1>
+          <div>
+            <%= label_tag :"重さ" %>
+            <%= text_field_tag "recipe[weight][]" %>g
+          </div>
+
+          <div>
+            <p><%= label_tag :"レシピ名" %></p>
+            <%= text_field_tag "recipe[name]" %>
+          </div>
+          <div>
+            <p><%= label_tag :"作り方" %></p>
+            <%= text_area_tag "recipe[content]" %>
+          </div>
+        
+          <%= submit_tag :"つくる" %>
+        <% end %><!--form_tag-->
+      </div><!--wrap-->
+
+    </div><!-- col-md-8 -->
+  </div><!-- row -->
+</div><!-- container -->

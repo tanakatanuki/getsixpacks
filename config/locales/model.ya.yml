@@ -1,0 +1,17 @@
+ja:
+  activerecord:
+    models:
+      recipe: "レシピ"
+      user: "ユーザー"
+    attributes:
+      recipe:
+        name: "レシピ名"
+        weight: "重さ"
+      user:
+        title: "タイトル"
+        email: "メールアドレス"
+        content: "内容"
+        current_password: "現在のパスワード"
+        password: "パスワード"
+        password_confirmation: "確認用パスワード"
+        remember_me: "ログインを記憶"

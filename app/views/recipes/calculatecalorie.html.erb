@@ -1,0 +1,36 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-1 col-xs-7">
+
+      <h1>計算結果ページ</h1>
+      
+      <p>最もお腹いっぱいになるレシピの組み合わせ</p>
+      <p>総カロリー..<%= @calorie_sum_dp %> kcal</p>
+      <p>総重量..<%= @weight_sum_dp %> g</p>
+      <p>P..<%= @protein_sum %> g, F..<%= @fat_sum %> g, C..<%= @carbohydrate_sum %> g</p>
+      
+      <div class="wrap">
+      <% @result_recipes.each do |recipe| %>
+        <h3 class="acHead_h3 acHead">
+          <%= recipe.name %>
+          (<%= recipe.calorie %>kcal, <%= recipe.weight %>g)
+        </h3>
+        <div class="acBody">
+            材料:
+            <% recipe.recipes.each do |r| %>
+            <!--
+            recipe_summary -> recip -> ingredientで、一気にingredientを取りたいのだが、
+            アソシエーションの設定がよくわからない
+            -->
+            <!--配列のindexは0から始まる、テーブルのidは1から始まる。両者一致させるために -1-->
+            <%= @ingredients_name[r.ingredient_id - 1] %>..<%= r.weight %>g, 
+            <% end %>
+            <p class="acBody_p">作り方...<%= recipe.content %></p>
+        </div>
+        <br>
+      <% end %>
+      </div>
+
+    </div><!-- col-md-8 -->
+  </div><!-- row -->
+</div><!-- container -->

@@ -1,0 +1,51 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-1 col-xs-7">
+      <h1>作成レシピ編集</h1>
+      <!--
+      ドロップダウンのメニューを、dbから動的に引っ張ってくる
+      -->
+      <!--urlの指定が、無理矢理過ぎる-->
+      <%= form_tag("/users/#{current_user.id}/recipes/#{params[:id]}", method: :patch) do %>    
+      <div class="wrap">
+        <!--
+        現在のレシピ内容
+        -->
+        <div>
+          <p><%= label_tag :"レシピ名" %></p>
+          <%= text_field_tag "recipe[name]", @recipe_summary.name %>
+        </div>
+        <div>
+          <p><%= label_tag :"作り方" %></p>
+          <%= text_area_tag "recipe[content]", @recipe_summary.content %>
+        </div>
+        <p>材料, 重さ</p>
+        <% @recipes.each do |recipe| %>
+          <div>
+            <!--<%= select_tag "recipe[ingredient][]", options_from_collection_for_select(@ingredients, :id, :name, {selected: recipe.ingredient_id}), include_blank: "不要"  %>        -->
+            <%= select_tag "recipe[ingredient][]", option_groups_from_collection_for_select(@ingredient_categories, :ingredients, :name, :id, :name, {selected: recipe.ingredient_id}), include_blank: "選んでね" %>        
+            <%= text_field_tag "recipe[weight][]", recipe.weight %>g
+          </div>
+        <% end %>
+      
+        <!--
+        レシピに付け加えるものがあるなら、ここから
+        -->
+        <% puts "#{@recipes.length}" %>
+        <% if @ingredient_number > @recipes.length %>
+          <% (@ingredient_number-@recipes.length).times{ %>
+          <div>
+            <!--<%= select_tag "add_recipe[ingredient][]", options_from_collection_for_select(@ingredients, :id, :name), include_blank: "選んでね" %>        -->
+            <%= select_tag "add_recipe[ingredient][]", option_groups_from_collection_for_select(@ingredient_categories, :ingredients, :name, :id, :name), include_blank: "選んでね" %>        
+            <%= text_field_tag "add_recipe[weight][]" %>g
+          </div>
+          <% } %>
+        <% end %>
+        
+        <%= submit_tag :"レシピを編集する" ,class: "btn btn-info" %>
+      </div>
+      <% end %>
+
+    </div><!-- col-md-8 -->
+  </div><!-- row -->
+</div><!-- container -->

@@ -1,0 +1,33 @@
+<div class="top_image">
+  <!--本番環境では画像が表示されなかった-->
+  <!--<img src="/assets/top_run.jpg">-->
+  <%= image_tag("/header-bg2.jpg") %>
+  <p>しっかり食べて、きれいに落とそう</p>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-1 col-xs-7">
+
+      <h1>最新レシピ一覧(<%= @view_limit %>件)</h1>
+        <!--
+        セレクトタブから材料名で、検索
+        -->
+        <%= form_tag(all_users_recipes_path, method: :post) do %>
+          <div class = wrap-search>
+            <p><%= label_tag :"材料名から検索" %></p>
+            <!--<%= select_tag "search[ingredient][]", options_from_collection_for_select(@ingredients, :id, :name), include_blank: "検索材料名" %>        -->
+            <%= select_tag "search[ingredient][]", option_groups_from_collection_for_select(@ingredient_categories, :ingredients, :name, :id, :name), include_blank: "選んでね" %>        
+          <%= submit_tag :"検索する"  ,class: "btn btn-info" %>
+          </div>
+        <% end %>
+        
+        <!--
+        チェックボックス付アコーディオン。チェックボックスもform_withで作る。
+        制約条件下で、最大重量となるチェックのついたメニューの組み合わせを計算する
+        -->
+        <%= render "myrecipes" %>
+
+    </div><!-- col-md-8 -->
+  </div><!-- row -->
+</div><!-- container -->

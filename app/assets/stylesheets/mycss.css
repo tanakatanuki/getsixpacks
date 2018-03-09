@@ -1,0 +1,94 @@
+.wrap{
+    /*width: 800px;*/
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 1px solid #000;
+}
+.wrap-chkbox{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.wrap-search{
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 10px;
+    border: 1px solid #000;
+}
+h3.acHead_h3{
+    border-bottom: 1px dotted #a9a9a9;
+    cursor: pointer;
+    /*margin: 1px;*/
+    /*padding: 3px;*/
+    display: inline;
+    font-size: 16px;
+}
+.acHead_h3:after, 
+.acHead_h3.active:after {
+    font-size: 15px;
+    /*font-size: 18px;*/
+    margin-left: 10px;
+}
+.acHead_h3.active::after {
+    content: "▲";
+}
+.acHead_h3::after {
+    content: "▼";
+}
+.acHead {
+    padding: 10px;
+}
+.acBody_p{
+    border-bottom: 1px dotted #a9a9a9;
+    /*margin: 0;*/
+}
+.acBody{
+    padding: 20px 20px;
+}
+.info{
+    font-size: 13px;
+}
+.title{
+    margin-top: 50px;
+    margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: lighter;
+}
+.setting_calorie{
+    padding: 20px 10px;
+}
+
+/*ヘッダーを固定したので、その分ずらす*/
+body {
+    padding-top: 50px;
+}
+/*親div*/
+.top_image {
+  position: relative;
+  background-color: #5ebfff;
+}
+
+.top_image p {
+  position: absolute;
+  /*文字を中央揃え*/
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin:0;
+  padding:0;
+  text-align: center;
+  
+  /*文字の装飾*/
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: Quicksand, sans-serif;
+}
+
+.top_image img {
+  width: 100%;
+}

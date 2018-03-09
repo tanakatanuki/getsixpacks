@@ -1,0 +1,40 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-1 col-xs-7">
+		  <!--
+		  タブ切り替えメニュー
+		  -->
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="#tab1" class="nav-link" data-toggle="tab">投稿レシピ</a>
+        </li>
+        <li class="nav-item">
+          <a href="#tab2" class="nav-link" data-toggle="tab">お気に入り</a>
+        </li>
+        <!--<li class="nav-item">-->
+        <!--  <a href="#tab3" class="nav-link" data-toggle="tab">入り</a></a>-->
+        <!--</li>-->
+        <!--<li class="nav-item">-->
+        <!--  <a href="#tab4" class="nav-link" data-toggle="tab">タブ4</a>-->
+        <!--</li>-->
+      </ul>
+      
+      <!--
+      タブ切り替えメニュー　本体
+      -->
+      <div class="tab-content">
+        <!--作成レシピ-->
+        <div id="tab1" class="tab-pane active">
+          <h1>投稿レシピ一覧</h1>
+          <%= render "myrecipes" %>
+        </div>
+        <!--お気に入り一覧-->
+        <div id="tab2" class="tab-pane">
+          <h1>お気に入りレシピ一覧</h1>
+          <%= render "myfavoriterecipes" %>
+        </div>
+      </div>
+
+    </div><!-- col-md-8 -->
+  </div><!-- row -->
+</div><!-- container -->
