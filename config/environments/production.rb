@@ -92,7 +92,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # use sendgrid pure-hollows-47479.herokuapp.com
-  config.action_mailer.default_url_options = { host: "https:///pure-hollows-47479.herokuapp.com/" }
+  config.action_mailer.default_url_options = { host: "https://pure-hollows-47479.herokuapp.com/" }
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings =
   {
