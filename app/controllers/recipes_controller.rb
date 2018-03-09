@@ -159,8 +159,11 @@ class RecipesController < ApplicationController
     if @recipe_summary.save
       redirect_to user_recipes_path, success: "レシピを保存しました"
     else
+      puts"保存に失敗　→　#{new_user_recipe_path}"
       flash[:danger] = "レシピの保存に失敗しました"
-      render new_user_recipe_path(current_user.id)
+      # renderだとmissing templateエラーになる。
+      # render new_user_recipe_path(current_user.id)
+      redirect_to new_user_recipe_path(current_user.id)
     end
   end
   
@@ -278,8 +281,9 @@ class RecipesController < ApplicationController
     unless @recipe_summary.update(name: params[:recipe][:name], protein: protein_sum, fat: fat_sum, carbohydrate: carbohydrate_sum, weight: weight_sum, calorie: calorie_sum,
       content: params[:recipe][:content],user_id: current_user.id) then
       flash[:danger] = "レシピの更新に失敗しました"
-      render edit_user_recipe_path(current_user.id)
-      # render
+      # renderだとエラーになる。redirect_toにしたが、上の方でチェックしているためここには入らないだろう
+      # render edit_user_recipe_path(current_user.id)
+      redirect_to edit_user_recipe_path(current_user.id)
     end
 
     # -------------------------------------
@@ -309,7 +313,9 @@ class RecipesController < ApplicationController
         # Recipe.create(name: params[:recipe][:name], ingredient_id: i, weight: w, user_id: current_user.id, recipe_summary_id: @recipe_summary.id)
         unless @recipes[cnt].update(name: params[:recipe][:name], ingredient_id: i, weight: w, user_id: current_user.id, recipe_summary_id: @recipe_summary.id) then
           flash[:danger] = "レシピの更新に失敗しました"
-          render edit_user_recipe(current_user.id)
+          # renderでエラーになる
+          # render edit_user_recipe(current_user.id)
+          redirect_to edit_user_recipe(current_user.id)
         end
       else
         @recipes[cnt].destroy
@@ -335,7 +341,9 @@ class RecipesController < ApplicationController
         # レシピを付け加えた場合のため、レシピを保存する。親の保存のあとでないと、エラーが出て、dbに保存できない
         unless Recipe.create(name: params[:recipe][:name], ingredient_id: i, weight: w, user_id: current_user.id, recipe_summary_id: @recipe_summary.id) then
           flash[:danger] = "レシピの更新に失敗しました"
-          render edit_user_recipe(current_user.id)
+          # renderだとエラーになる
+          # render edit_user_recipe(current_user.id)
+          redirect_to edit_user_recipe(current_user.id)
         end
       end
     end
@@ -397,12 +405,12 @@ class RecipesController < ApplicationController
     # puts @b
     
     # レシピの表示順を変えた場合(descにした場合)、paramの順が逆になるため、元に戻す
-      puts "sort_desc...#{params[:sort_desc].to_i},view_limit...#{@view_limit}"
+      # puts "sort_desc...#{params[:sort_desc].to_i},view_limit...#{@view_limit}"
     if params[:sort_desc].to_i == 1
-      puts "sort_desc"
+      # puts "sort_desc"
       recipe_summary_params_reverse = params[:recipe_summary][:recipe_ids].reverse 
       @c = recipe_summary_params_reverse.map(&:to_i)
-      puts "c0..#{@c[0]},c1..#{@c[1]}"
+      # puts "c0..#{@c[0]},c1..#{@c[1]}"
     else
       @c = recipe_summary_params.map(&:to_i)
     end
