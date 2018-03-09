@@ -5,7 +5,7 @@ class RecipesController < ApplicationController
   
   # 全ユーザーの投稿一覧
   def all_users_recipes
-    @view_limit = 5
+    @view_limit = 30
     @recipe_summary = RecipeSummary.new
     # @recipe_summaries = RecipeSummary.all
     @recipe_summaries = RecipeSummary.all.order(created_at: :desc).limit(@view_limit)

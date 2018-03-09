@@ -43,13 +43,26 @@
             お気に入りレシピが一つもありません。
             <%= link_to "みんなが投稿したレシピを見に行く", all_users_recipes_path %>
           <% end %>
-          
-          <div  class=setting_calorie>
-            <p><%= label_tag :"設定カロリー" %>
-            <%= text_field_tag "setting_calorie" %>kcal以下で、<BR>
-            もっともお腹いっぱいになるレシピの組み合わせは......?</p>
-          </div>
-          <%= f.submit "→ レシピの組み合わせを見る" ,class: "btn btn-info" %>
+            
+            <!--
+            一定カロリー以下でのレシピの組み合わせ計算
+            -->
+            <div class=setting_calorie>
+              <% if !user_signed_in? %>
+                <h4>ダイエットの近道は、カロリー制限</h4>
+                <p>　でも、カロリー制限食では物足りない</p>
+                <p>　そこでカロリーを制限しつつ、もっとも量の多いレシピの組み合わせを探します</p>
+                <p>◇使い方 :</p>
+                <p>　1.食べたいレシピにチェックを入れます</p>
+                <p>　2.カロリーを設定します →　<%= text_field_tag "setting_calorie" %>kcal</p>
+                <p>　3.<%= f.submit "--> レシピの組み合わせを探す" ,class: "btn btn-info" %>をクリックします</p>
+              <% else %>
+                <p>カロリーを制限しつつ、もっとも量の多いレシピの組み合わせは?</p>
+                <p>　1.食べたいレシピにチェック</p>
+                <p>　2.<%= text_field_tag "setting_calorie" %>kcal以下　(カロリーを設定)</p>
+                <p>　3.<%= f.submit "--> レシピの組み合わせを探す" ,class: "btn btn-info" %></p>
+              <% end %>
+            </div>
         </div><!-- class=wrap -->
     
       <% end %><!--form_with-->

@@ -145,9 +145,7 @@ function realtimeCheck03(){
 // turbolinksが原因で、ページ遷移時、jqueryが動かなかったため、対策
 $(document).on ('turbolinks:load', function(){
 // $(document).ready(function() {
-  // let text = '1913年に創業者のマリオ・プラダと兄弟によりインポートショップをオープン。世界中の素材や高品質な革を集め、イタリアの技術を投入したアイテムが有名に。1978年に孫娘のミウッチャ・プラダがオーナー兼デザイナーに就任。その後、マリオの使用していたナイロン地“ポコノ”に目を向け、レザーと併用したバッグが大ヒット。逆三角形のロゴプレートが一世を風靡したのは最近の記憶にも新しい。以来、PRADAはクリスマス時のシーズンアイテムや、上質なレザーを使用したSAFFIANOシリーズ等のブランドの代名詞と言われるアイテムを生み出した。近年では、映画への衣装提供・モバイル発売・車のデザイン等、服飾だけでなく様々な分野にも進出し、前進しつづけるブランド。';
-  // $('.info').append(text);
-  
+
   $('.acBody').each(function(){
       $(this).css("height",$(this).height()+"px");
   });
@@ -155,7 +153,7 @@ $(document).on ('turbolinks:load', function(){
   $('.acBody').hide();
   
   $('.acHead').click(function () {
-      // $(this).next('.acBody').slideToggle('slow');
+      // $(this).next('.acBody').slideToggle("fast");
       $(this).next().slideToggle('fast');
       $(this).toggleClass('active');
   });
