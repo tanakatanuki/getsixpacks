@@ -4,8 +4,9 @@
 
       <h1>最適なレシピの組み合わせ</h1>
       
-
-      <h3>あなたが選んだレシピから、<span class="underline">合計カロリー <%= @setting_calorie %>kcal を守り</span>つつ、<span class="underline2">最もお腹がいっぱい</span>になるレシピの組み合わせを探したよ</h3>
+      <p>
+      <h5>あなたが選んだレシピから、<span class="underline">合計カロリー <%= @setting_calorie %>kcal を守り</span>つつ、<span class="underline">最もお腹がいっぱい</span>になるレシピの組み合わせを探したよ</h5>
+      </p>
       <div class="wrap">
         <% @selected_recipes.each do |recipe| %>
         <% if @result_recipes.pluck(:id).include?(recipe.id) %>
