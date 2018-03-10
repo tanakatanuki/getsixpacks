@@ -1,15 +1,16 @@
+
 .wrap{
     /*width: 800px;*/
     width: 100%;
     padding-top: 20px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
     border: 1px solid #000;
 }
 .wrap-chkbox{
-    padding-top: 10px;
-    padding-bottom: 10px;
+    /*padding-top: 10px;*/
+    /*padding-bottom: 10px;*/
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -19,12 +20,15 @@
     padding: 20px 30px;
     border: 1px solid #000;
 }
-h3.acHead_h3{
+.acHead {
+    /*padding: 10px;*/
     border-bottom: 1px dotted #a9a9a9;
+}
+h3.acHead_h3{
+    display: inline;
     cursor: pointer;
     /*margin: 1px;*/
     /*padding: 3px;*/
-    display: inline;
     font-size: 16px;
 }
 .acHead_h3:after, 
@@ -33,20 +37,26 @@ h3.acHead_h3{
     /*font-size: 18px;*/
     margin-left: 10px;
 }
-.acHead_h3.active::after {
+.acHead.active::after {
     content: "▲";
 }
-.acHead_h3::after {
+.acHead::after {
     content: "▼";
 }
-.acHead {
-    padding: 10px;
-}
+/*.acHead_h3.active::after {*/
+/*    content: "▲";*/
+/*}*/
+/*.acHead_h3::after {*/
+/*    content: "▼";*/
+/*}*/
 .acBody_p{
+  /*overflow: hidden;*/
     border-bottom: 1px dotted #a9a9a9;
     /*margin: 0;*/
 }
 .acBody{
+  /*overflow: hidden;*/
+    border-bottom: 1px dotted #a9a9a9;
     padding: 20px 20px;
 }
 .info{

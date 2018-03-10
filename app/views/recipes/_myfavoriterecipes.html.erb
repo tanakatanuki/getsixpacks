@@ -8,8 +8,9 @@
           <% if @favorite_recipe_summaries.present? %>
             <% @favorite_recipe_summaries.each do |recipe| %>
               <div class="wrap-chkbox">
+                <div class="acHead">
               <%= f.check_box :recipe_ids, {multiple: true, include_hidden: false}, recipe[:id] %>
-                <h3 class="acHead_h3 acHead">
+                <h3 class="acHead_h3">
                   <%= recipe.name %>
                   (<%= recipe.calorie %>kcal, <%= recipe.weight %>g)
                   <% if user_signed_in? && current_user.id == recipe.user_id %>
@@ -20,8 +21,11 @@
                   <% end %><!-- user_signed_in? -->
                   <%= link_to "お気に削除", recipe_favorite_path(recipe.id, current_user.id, flag: request.path), method: :delete %>
                 </h3>
+                </div>
+
                 <div class="acBody">
                     <% if user_signed_in? && (recipe.user_id != current_user.id) %>
+                    <!--<p>・PFCバランス : P=<%= recipe.protein %>g, F=<%= recipe.fat %>g, C=<%= recipe.carbohydrate %>g</p>-->
                     <p>・PFCバランス : P=<%= recipe.protein %>g, F=<%= recipe.fat %>g, C=<%= recipe.carbohydrate %>g</p>
                     <% end %>
                     <p>・材料 : 
@@ -33,7 +37,7 @@
                     <!--配列のindexは0から始まる、テーブルのidは1から始まる。両者一致させるために -1-->
                     <%= @ingredients_name[r.ingredient_id - 1] %>..<%= r.weight %>g, 
                     <% end %></p>
-                    <p class="acBody_p">・作り方 : <%= recipe.content %></p>
+                    <p>・作り方 : <%= recipe.content %></p>
                 </div>
                 <br>
               </div>

@@ -2,20 +2,20 @@
 	<div class="row">
 		<div class="col-md-8 col-md-offset-1 col-xs-7">
 
-      <h1>計算結果ページ</h1>
+      <h1>最適なレシピの組み合わせ</h1>
       
-      <p>最もお腹いっぱいになるレシピの組み合わせ</p>
-      <p>総カロリー..<%= @calorie_sum_dp %> kcal</p>
-      <p>総重量..<%= @weight_sum_dp %> g</p>
-      <p>P..<%= @protein_sum %> g, F..<%= @fat_sum %> g, C..<%= @carbohydrate_sum %> g</p>
-      
+
+      <h3>あなたが選んだレシピから、<span class="underline">合計カロリー <%= @setting_calorie %>kcal を守り</span>つつ、<span class="underline2">最もお腹がいっぱい</span>になるレシピの組み合わせを探したよ</h3>
       <div class="wrap">
-      <% @result_recipes.each do |recipe| %>
-        <h3 class="acHead_h3 acHead">
-          <%= recipe.name %>
-          (<%= recipe.calorie %>kcal, <%= recipe.weight %>g)
-        </h3>
-        <div class="acBody">
+        <% @selected_recipes.each do |recipe| %>
+        <% if @result_recipes.pluck(:id).include?(recipe.id) %>
+          <div class= " acHead">
+            <h3 class="acHead_h3">
+              <span class="underline2">OK -> <%= recipe.name %></span>
+              (<%= recipe.calorie %>kcal, <%= recipe.weight %>g)
+            </h3>
+          </div>
+          <div class="acBody">
             材料:
             <% recipe.recipes.each do |r| %>
             <!--
@@ -25,11 +25,23 @@
             <!--配列のindexは0から始まる、テーブルのidは1から始まる。両者一致させるために -1-->
             <%= @ingredients_name[r.ingredient_id - 1] %>..<%= r.weight %>g, 
             <% end %>
-            <p class="acBody_p">作り方...<%= recipe.content %></p>
+            <p>作り方...<%= recipe.content %></p>
+          </div>
+        <% else %>
+          <div class= "acBody_p">
+          NG -> <%= recipe.name %>(<%= recipe.calorie %>kcal, <%= recipe.weight %>g)
+          </div>
+        <% end %>
+        <BR>
+        <% end %>
+        <div class="wrap-search">
+          <p><span class="underline2">
+            総カロリー..<%= @calorie_sum_dp %> kcal (P=<%= @protein_sum %> g, F=<%= @fat_sum %> g, C=<%= @carbohydrate_sum %> g)
+          </span></p>
+          <p>総重量..<%= @weight_sum_dp %> g</p>
         </div>
-        <br>
-      <% end %>
       </div>
+
 
     </div><!-- col-md-8 -->
   </div><!-- row -->

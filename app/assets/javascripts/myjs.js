@@ -147,15 +147,21 @@ $(document).on ('turbolinks:load', function(){
 // $(document).ready(function() {
 
   $('.acBody').each(function(){
-      $(this).css("height",$(this).height()+"px");
+    console.log($(this).height())
+    if($(this).height() <= 0){
+      $(this).css("height",120+"px");
+    }else{
+      $(this).css("height",$(this).height()+30+"px");
+    }
   });
   
   $('.acBody').hide();
   
   $('.acHead').click(function (e) {
       // $(this).next('.acBody').slideToggle("fast");
-      // クリックしたのが<a>意外だった場合、アコーディオンを開く
-      if(!$(e.target).is("a")){
+      // クリックしたのが<a>以外だった場合、アコーディオンを開く
+      if(!$(e.target).is("a") && !$(e.target).is("input")){
+      // if(!$(e.target).is("a") || !$(e.target).is("input") || !$(e.target).is("div")){
         $(this).next().slideToggle('fast');
         $(this).toggleClass('active');
       }

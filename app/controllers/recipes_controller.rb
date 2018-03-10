@@ -19,9 +19,11 @@ class RecipesController < ApplicationController
 
     # 
     if @sort_desc == 1
-      @recipe_summaries = RecipeSummary.all.order(created_at: :desc).limit(@view_limit)
+      # @recipe_summaries = RecipeSummary.all.order(created_at: :desc).limit(@view_limit)
+      @recipe_summaries = RecipeSummary.all.order(id: :desc).limit(@view_limit)
     else
-      @recipe_summaries = RecipeSummary.all.order(created_at: :asc).limit(@view_limit)
+      # @recipe_summaries = RecipeSummary.all.order(created_at: :asc).limit(@view_limit)
+      @recipe_summaries = RecipeSummary.all.order(id: :asc).limit(@view_limit)
     end
 
 
@@ -29,9 +31,11 @@ class RecipesController < ApplicationController
     if request.post?
       recipe_ids = Recipe.where(ingredient_id: params[:search][:ingredient]).pluck :recipe_summary_id
       if @sort_desc == 1
-        @recipe_summaries = RecipeSummary.where(id: recipe_ids).order(created_at: :desc).limit(@view_limit)
+        # @recipe_summaries = RecipeSummary.where(id: recipe_ids).order(created_at: :desc).limit(@view_limit)
+        @recipe_summaries = RecipeSummary.where(id: recipe_ids).order(id: :desc).limit(@view_limit)
       else
-        @recipe_summaries = RecipeSummary.where(id: recipe_ids).order(created_at: :asc).limit(@view_limit)
+        # @recipe_summaries = RecipeSummary.where(id: recipe_ids).order(created_at: :asc).limit(@view_limit)
+        @recipe_summaries = RecipeSummary.where(id: recipe_ids).order(id: :asc).limit(@view_limit)
       end
     end
   end
@@ -60,13 +64,22 @@ class RecipesController < ApplicationController
     # @recipes = Recipe.all
     @recipes = Recipe.where(user_id: params[:user_id])
     @recipe_summary = RecipeSummary.new
-    @recipe_summaries = RecipeSummary.where(user_id: params[:user_id])
     @favorites = Favorite.where(user_id: current_user.id)
     @favorites_ids = Favorite.where(user_id: current_user.id).pluck(:recipe_summary_id)
     # puts @favorites_ids
     # puts @favorites[1].recipe_summary_id
     @favorite_recipe_summaries = RecipeSummary.where(id: @favorites_ids)
     # puts @favorite_recipe_summaries[0].name
+
+    # 
+    # @recipe_summaries = RecipeSummary.where(user_id: params[:user_id])
+    if @sort_desc == 1
+      # @recipe_summaries = RecipeSummary.all.order(created_at: :desc).limit(@view_limit)
+      @recipe_summaries = RecipeSummary.where(user_id: params[:user_id]).order(id: :desc).limit(@view_limit)
+    else
+      # @recipe_summaries = RecipeSummary.all.order(created_at: :asc).limit(@view_limit)
+      @recipe_summaries = RecipeSummary.where(user_id: params[:user_id]).order(id: :asc).limit(@view_limit)
+    end
   end
   
   def new
@@ -444,6 +457,9 @@ class RecipesController < ApplicationController
     @protein_sum = @result_recipes.pluck(:protein).inject(:+)
     @fat_sum = @result_recipes.pluck(:fat).inject(:+)
     @carbohydrate_sum = @result_recipes.pluck(:carbohydrate).inject(:+)
+    
+    @selected_recipes = RecipeSummary.where(id: @c)
+    @setting_calorie = w
 
   end
 
