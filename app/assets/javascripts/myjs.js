@@ -152,10 +152,13 @@ $(document).on ('turbolinks:load', function(){
   
   $('.acBody').hide();
   
-  $('.acHead').click(function () {
+  $('.acHead').click(function (e) {
       // $(this).next('.acBody').slideToggle("fast");
-      $(this).next().slideToggle('fast');
-      $(this).toggleClass('active');
+      // クリックしたのが<a>意外だった場合、アコーディオンを開く
+      if(!$(e.target).is("a")){
+        $(this).next().slideToggle('fast');
+        $(this).toggleClass('active');
+      }
   });
   
   

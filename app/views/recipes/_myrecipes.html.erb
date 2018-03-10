@@ -7,6 +7,7 @@
             <% @recipe_summaries.each do |recipe| %>
             <div class="wrap-chkbox">
               <%= f.check_box :recipe_ids, {multiple: true, include_hidden: false}, recipe[:id] %>
+                <!--<h3 class="acHead_h3 acHead">-->
                 <h3 class="acHead_h3 acHead">
                   <%= recipe.name %>
                   (<%= recipe.calorie %>kcal, <%= recipe.weight %>g)
@@ -32,7 +33,9 @@
                     <% else %>
                       <%= link_to "お気にする", recipe_favorites_path(recipe.id, flag: request.path), method: :post %>
                     <% end %>
+                    
                   <% end %>
+          
                 </h3>
                 <div class="acBody">
                     <% if user_signed_in? && (recipe.user_id != current_user.id) %>
